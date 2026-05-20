@@ -1,0 +1,28 @@
+# Obraz Dockera budujemy z kodu, bez lokalnych zaleznosci i danych runtime.
+node_modules
+logs
+.env
+.env.*
+!.env.example
+google-service-account.json
+old
+Działająca konfiguracja
+Oryginalny bot Asmodeusz
+*.log
+stats_cache*.json
+message_log.txt
+bindings.json
+boosts.json
+clan_stats.json
+klan.json
+listaklanu.json
+loteria.json
+rocznice.json
+season.json
+streamers.json
+temporary_voice_config.json
+tempRoles.json
+tickets.json
+youtube.json
+data
+Dzia*konfiguracja

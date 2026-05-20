@@ -1,0 +1,36 @@
+# Sekrety i lokalna konfiguracja nie powinny trafic do repo.
+.env
+.env.*
+.env2
+!.env.example
+google-service-account.json
+
+# Zaleznosci sa odtwarzane przez npm ci.
+node_modules/
+.idea/
+
+# Dane runtime bota. W kontenerze najlepiej podpiac je jako wolumen.
+logs/
+*.log
+bindings.json
+boosts.json
+clan_stats.json
+klan.json
+listaklanu.json
+loteria.json
+message_log.txt
+rocznice.json
+season.json
+stats_cache.json
+stats_cache_old.json
+streamers.json
+temporary_voice_config.json
+tempRoles.json
+tickets.json
+youtube.json
+
+# Lokalne kopie i archiwa robocze.
+old/
+Działająca konfiguracja/
+Oryginalny bot Asmodeusz/
+asmodeusz.monolith.js

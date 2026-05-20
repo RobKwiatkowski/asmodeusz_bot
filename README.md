@@ -1,0 +1,97 @@
+# Asmodeusz
+
+Bot Discord dla spolecznosci National Devils. Po refaktorze glowny plik
+`asmodeusz.js` tylko uruchamia aplikacje, a funkcje sa w modulach `src/features`.
+
+## Szybkie wprowadzenie
+
+Jesli przekazujesz ten projekt dalej, najprosciej myslec o nim tak:
+
+1. `asmodeusz.js` uruchamia bota.
+2. `src/config.js` zbiera ustawienia i sekrety.
+3. `commands/` trzyma komendy wpisywane na Discordzie.
+4. `src/features/` trzyma automatyczne funkcje bota.
+5. Pliki `.json` i katalog `logs/` przechowuja stan bota i historie dzialania.
+
+## Start lokalny
+
+```bash
+npm ci
+cp .env.example .env
+npm start
+```
+
+## Start w kontenerze
+
+```bash
+docker compose up -d --build
+```
+
+Sekrety trzymaj w `.env`, a stan bota w wolumenie `data/`. Szczegoly sprzatania sa w
+`docs/CLEANUP.md`.
+
+## Najwazniejsze pliki i foldery
+
+### Pliki startowe i konfiguracyjne
+
+- `README.md` - krotki opis projektu i instrukcja startu.
+- `package.json` - lista bibliotek oraz komendy typu `npm start`.
+- `package-lock.json` - dokladne wersje bibliotek; zwykle nie edytuje sie go recznie.
+- `.env.example` - wzor konfiguracji. Pokazuje, jakie tokeny, hasla i ID trzeba uzupelnic.
+- `.env` - prawdziwe sekrety do lokalnego uruchomienia. Tego pliku nie wrzucamy na GitHub.
+- `docker-compose.yml` - najprostszy sposob uruchomienia bota na serwerze w Dockerze.
+- `Dockerfile` - przepis, jak zbudowac obraz Dockera dla tego bota.
+- `.dockerignore` - lista plikow, ktorych nie trzeba kopiowac do obrazu Dockera.
+- `.gitignore` - lista plikow, ktorych nie chcemy wysylac do repozytorium.
+
+### Glowny kod aplikacji
+
+- `asmodeusz.js` - glowny punkt startowy. Sprawdza konfiguracje, tworzy klienta Discord i wlacza reszte modulow.
+- `src/config.js` - centrum ustawien. Tu sa sciezki do plikow, ID kanalow i rol oraz dane do integracji.
+- `src/client.js` - tworzy polaczenie z Discordem i ustawia, jakie typy zdarzen bot ma odbierac.
+- `src/commandLoader.js` - laduje komendy slash z katalogu `commands/` i rejestruje je na serwerze Discord.
+- `src/eventLoader.js` - laduje eventy z katalogu `events/`.
+- `src/features/index.js` - wlacza wszystkie dodatkowe funkcje bota w jednym miejscu.
+- `src/jsonStore.js` - prosty zapis i odczyt plikow JSON. To taka mala "pamiec" bota bez bazy danych.
+- `src/logger.js` - zapisuje logi do plikow dzien po dniu.
+- `src/pubgApi.js` - wspolny kod do polaczenia z PUBG API.
+
+### Katalogi z logika bota
+
+- `commands/` - kazdy plik to jedna komenda Discord, np. loteria, ticket, PUBG albo topka.
+- `src/features/` - automatyczne funkcje bota, np. rangi PUBG, pokoje glosowe, tickety, YouTube, streamy i logi.
+- `events/` - reakcje na wybrane zdarzenia Discorda, glownie zwiazane z wydarzeniami serwera.
+- `klan/` - logika zwiazana z klanem: synchronizacja skladu, zapis danych i integracja z WordPressem.
+- `utils/` - mniejsze pliki pomocnicze do integracji z zewnetrznymi uslugami.
+- `assets/` - obrazki uzywane przez bota.
+- `docs/` - dodatkowe notatki techniczne.
+
+### Pliki z danymi bota
+
+To nie jest kod. Te pliki trzymaja aktualny stan bota i czesto tworza sie albo zmieniaja same podczas dzialania.
+
+- `bindings.json` - powiazania kont Discord z nickami PUBG.
+- `loteria.json` - lista uczestnikow loterii.
+- `streamers.json` - lista obserwowanych streamerow.
+- `youtube.json` - ustawienia i zapis obserwowanych kanalow YouTube.
+- `tickets.json` - licznik ticketow.
+- `temporary_voice_config.json` - stan tymczasowych pokoi glosowych.
+- `tempRoles.json` - dane o rolach tymczasowych.
+- `season.json` - zapamietany sezon PUBG.
+- `stats_cache.json` - zapis ostatnio pobranych statystyk PUBG, zeby nie pytac API za czesto.
+- `clan_stats.json` - ostatni zapis poziomu i statystyk klanu.
+- `klan.json` i `listaklanu.json` - dane potrzebne do listy i statystyk klanu.
+- `rocznice.json` - zapis, komu bot juz naliczyl rocznice.
+- `wulgaryzmy.txt` - lista zablokowanych slow, uzywana przy niektorych pokojach glosowych.
+- `logs/` - dzienne logi dzialania bota.
+- `google-service-account.json` - klucz do Google Sheets. To sekret i nie powinien trafic do publicznego repo.
+
+### Co mozna zignorowac na start
+
+- `Dzialajaca konfiguracja/` - kopie starszych, dzialajacych wersji.
+
+## Uwaga praktyczna
+
+Przy uruchomieniu w Dockerze dane bota sa trzymane glownie w `./data` i `./logs`
+na hoscie. Przy uruchomieniu bez Dockera czesc plikow JSON moze lezec bezposrednio
+w katalogu projektu, zalezne od ustawienia `DATA_DIR`.

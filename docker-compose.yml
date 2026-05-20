@@ -1,0 +1,16 @@
+# Przyklad uruchomienia na domowym serwerze. Pliki JSON i logi warto trzymac
+# na hoście, bo sa stanem bota, a nie czescia obrazu.
+services:
+  asmodeusz:
+    build: .
+    container_name: asmodeusz
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATA_DIR: /app/data
+      LOG_DIR: /app/logs
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./google-service-account.json:/app/secrets/google-service-account.json:ro
