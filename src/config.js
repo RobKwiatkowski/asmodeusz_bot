@@ -1,7 +1,8 @@
 // Centralna konfiguracja bota. Ten plik zbiera ID kanalow/rol oraz sekrety z ENV,
 // zeby logika funkcji nie trzymala hasel ani tokenow na sztywno w kodzie.
 const path = require('path');
-require('dotenv').config();
+const envFilePath = process.env.ENV_FILE || '.env';
+require('dotenv').config({ path: envFilePath });
 
 const rootDir = path.resolve(__dirname, '..');
 const dataDir = path.resolve(env('DATA_DIR', rootDir));

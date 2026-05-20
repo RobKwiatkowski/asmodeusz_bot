@@ -1,14 +1,15 @@
 # Sprzatanie repo przed uruchomieniem w kontenerze
 
-Ten projekt trzyma teraz konfiguracje w `src/config.js`, a sekrety powinny isc przez `.env`
-albo zmienne srodowiskowe w `docker-compose.yml`.
+Ten projekt trzyma teraz konfiguracje w `src/config.js`, a sekrety powinny isc przez
+`.env.production`, `.env.test` albo zmienne srodowiskowe w `docker-compose.yml`.
 
 ## Nie commitowac
 
 Te pliki nie powinny byc w repo. Trzymaj je lokalnie albo jako sekrety/wolumen na serwerze:
 
-- `.env`
-- `.env2` - mozna polaczyc z `.env`, a potem skasowac
+- `.env.production`
+- `.env.test`
+- `.env2` - stary plik; mozna przeniesc dane do `.env.production` albo `.env.test`, a potem skasowac
 - `google-service-account.json`
 - `logs/`
 - `bindings.json`
@@ -65,6 +66,8 @@ Te pliki sa potrzebne albo sa kodem/aplikacja:
 - `Dockerfile`
 - `docker-compose.yml`
 - `.env.example`
+- `.env.production.example`
+- `.env.test.example`
 
 ## Proponowany model na serwerze
 
@@ -74,3 +77,9 @@ W kontenerze ustaw:
 - `LOG_DIR=/app/logs`
 
 Wtedy JSON-y runtime beda w wolumenie `./data:/app/data`, a logi w `./logs:/app/logs`.
+
+Domyslnie `docker-compose.yml` czyta `.env.production`. Dla testow uruchamiaj:
+
+```bash
+ENV_FILE=.env.test docker compose up -d --build
+```

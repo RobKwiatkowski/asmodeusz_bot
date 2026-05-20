@@ -17,18 +17,28 @@ Jesli przekazujesz ten projekt dalej, najprosciej myslec o nim tak:
 
 ```bash
 npm ci
-cp .env.example .env
-npm start
+cp .env.production.example .env.production
+nano .env.production
+ENV_FILE=.env.production npm start
 ```
 
 ## Start w kontenerze
 
 ```bash
+cp .env.production.example .env.production
+cp .env.test.example .env.test
 docker compose up -d --build
 ```
 
-Sekrety trzymaj w `.env`, a stan bota w wolumenie `data/`. Szczegoly sprzatania sa w
-`docs/CLEANUP.md`.
+Domyslnie Docker Compose czyta `.env.production`. Jesli chcesz uruchomic wersje
+testowa, uzyj:
+
+```bash
+ENV_FILE=.env.test docker compose up -d --build
+```
+
+Sekrety trzymaj w `.env.production` i `.env.test`, a stan bota w wolumenie `data/`.
+Szczegoly sprzatania sa w `docs/CLEANUP.md`.
 
 ## Najwazniejsze pliki i foldery
 
@@ -37,8 +47,11 @@ Sekrety trzymaj w `.env`, a stan bota w wolumenie `data/`. Szczegoly sprzatania 
 - `README.md` - krotki opis projektu i instrukcja startu.
 - `package.json` - lista bibliotek oraz komendy typu `npm start`.
 - `package-lock.json` - dokladne wersje bibliotek; zwykle nie edytuje sie go recznie.
-- `.env.example` - wzor konfiguracji. Pokazuje, jakie tokeny, hasla i ID trzeba uzupelnic.
-- `.env` - prawdziwe sekrety do lokalnego uruchomienia. Tego pliku nie wrzucamy na GitHub.
+- `.env.production.example` - wzor konfiguracji dla produkcji.
+- `.env.test.example` - wzor konfiguracji dla testow.
+- `.env.production` - prawdziwe sekrety dla produkcji. Tego pliku nie wrzucamy na GitHub.
+- `.env.test` - prawdziwe sekrety dla testow. Tego pliku nie wrzucamy na GitHub.
+- `.env.example` - stary, ogolny wzor; zostal dla zgodnosci wstecznej.
 - `docker-compose.yml` - najprostszy sposob uruchomienia bota na serwerze w Dockerze.
 - `Dockerfile` - przepis, jak zbudowac obraz Dockera dla tego bota.
 - `.dockerignore` - lista plikow, ktorych nie trzeba kopiowac do obrazu Dockera.
@@ -95,3 +108,6 @@ To nie jest kod. Te pliki trzymaja aktualny stan bota i czesto tworza sie albo z
 Przy uruchomieniu w Dockerze dane bota sa trzymane glownie w `./data` i `./logs`
 na hoscie. Przy uruchomieniu bez Dockera czesc plikow JSON moze lezec bezposrednio
 w katalogu projektu, zalezne od ustawienia `DATA_DIR`.
+
+Dla testow ustaw osobne ID serwera Discord, kanalow i rol. W przeciwnym razie bot
+testowy moze probowac dzialac na ustawieniach produkcyjnych.

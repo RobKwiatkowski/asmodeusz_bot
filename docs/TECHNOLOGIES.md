@@ -5,7 +5,7 @@
 - Node.js - uruchamia kod JavaScript poza przegladarka.
 - discord.js - biblioteka do komunikacji z API Discorda.
 - Docker / docker compose - uruchamianie bota jako kontenera na serwerze.
-- dotenv / `.env` - konfiguracja i sekrety poza kodem.
+- dotenv / pliki `.env.*` - konfiguracja i sekrety poza kodem, np. osobno dla produkcji i testow.
 - node-cron - harmonogram zadan cyklicznych.
 
 ## Pliki JSON

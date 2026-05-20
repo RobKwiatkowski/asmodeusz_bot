@@ -3,6 +3,8 @@
 .env.*
 .env2
 !.env.example
+!.env.production.example
+!.env.test.example
 google-service-account.json
 
 # Zaleznosci sa odtwarzane przez npm ci.

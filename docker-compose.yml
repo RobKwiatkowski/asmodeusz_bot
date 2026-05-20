@@ -6,7 +6,7 @@ services:
     container_name: asmodeusz
     restart: unless-stopped
     env_file:
-      - .env
+      - ${ENV_FILE:-.env.production}
     environment:
       DATA_DIR: /app/data
       LOG_DIR: /app/logs
