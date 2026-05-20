@@ -62,7 +62,7 @@ async function checkAllChannels(client) {
 }
 
 function setupYoutube(client) {
-  client.once('ready', () => {
+  client.once('clientReady', () => {
     checkAllChannels(client).catch(error => console.error('[youtube] Blad:', error));
     setInterval(() => checkAllChannels(client), config.notifications.youtubeCheckMs);
   });

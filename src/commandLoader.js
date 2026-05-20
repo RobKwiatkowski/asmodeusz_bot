@@ -44,7 +44,7 @@ function registerCommandHooks(client) {
     }
 
     if (typeof command.startCron === 'function') {
-      client.once('ready', () => command.startCron(client));
+      client.once('clientReady', () => command.startCron(client));
     }
   }
 }
@@ -57,7 +57,13 @@ function registerInteractionRouter(client) {
     if (!command) return;
 
     try {
+      console.log(
+        `[commands] Start /${interaction.commandName} | ` +
+        `guild=${interaction.guildId} | channel=${interaction.channelId} | ` +
+        `user=${interaction.user?.tag || interaction.user?.id}`
+      );
       await command.execute(interaction);
+      console.log(`[commands] Sukces /${interaction.commandName}`);
     } catch (error) {
       console.error(`[commands] Blad komendy /${interaction.commandName}:`, error);
       const payload = {
@@ -75,7 +81,7 @@ function registerInteractionRouter(client) {
 }
 
 function registerCommandsOnReady(client, commandPayload) {
-  client.once('ready', async () => {
+  client.once('clientReady', async () => {
     const rest = new REST({ version: '10' }).setToken(config.discord.token);
 
     try {

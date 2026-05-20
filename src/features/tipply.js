@@ -25,7 +25,7 @@ function setupTipply(client) {
     return;
   }
 
-  client.once('ready', () => {
+  client.once('clientReady', () => {
     tipplyListener(client).catch(error => {
       console.error('[tipply] Blad listenera:', error);
     });

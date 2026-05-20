@@ -62,7 +62,7 @@ async function checkClanLevel(client) {
 }
 
 function setupClanLevelMonitor(client) {
-  client.once('ready', () => {
+  client.once('clientReady', () => {
     checkClanLevel(client);
     setInterval(() => checkClanLevel(client), config.pubg.clanLevelCheckMs);
   });

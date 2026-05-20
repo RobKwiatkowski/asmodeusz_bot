@@ -92,7 +92,7 @@ async function resetRankRolesIfSeasonChanged(client) {
 }
 
 function setupPubgRanks(client) {
-  client.once('ready', async () => {
+  client.once('clientReady', async () => {
     await resetRankRolesIfSeasonChanged(client);
     setInterval(() => resetRankRolesIfSeasonChanged(client), 60 * 60 * 1000);
   });

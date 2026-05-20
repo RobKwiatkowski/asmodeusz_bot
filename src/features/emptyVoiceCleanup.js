@@ -28,7 +28,7 @@ async function cleanupEmptyVoiceChannels(guild) {
 }
 
 function setupEmptyVoiceCleanup(client) {
-  client.once('ready', () => {
+  client.once('clientReady', () => {
     setInterval(() => {
       client.guilds.cache.forEach(guild => cleanupEmptyVoiceChannels(guild));
     }, 60_000);

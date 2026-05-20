@@ -88,7 +88,7 @@ async function checkStreams(client) {
 }
 
 function setupStreams(client) {
-  client.once('ready', () => {
+  client.once('clientReady', () => {
     checkStreams(client).catch(error => console.error('[streams] Blad:', error));
     setInterval(() => checkStreams(client).catch(error => console.error('[streams] Blad:', error)), config.notifications.twitchCheckMs);
   });

@@ -90,7 +90,7 @@ async function checkAnniversaries(client, initialRun = false) {
 }
 
 function setupAnniversaries(client) {
-  client.once('ready', async () => {
+  client.once('clientReady', async () => {
     await checkAnniversaries(client, true).catch(error => console.error('[anniversaries] Blad:', error));
     setInterval(() => {
       checkAnniversaries(client, false).catch(error => console.error('[anniversaries] Blad:', error));
