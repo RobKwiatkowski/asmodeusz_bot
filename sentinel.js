@@ -6,8 +6,19 @@ const { setupCommands } = require('./src/commandLoader');
 const { setupEvents } = require('./src/eventLoader');
 const { setupFeatures } = require('./src/features');
 
-if (!config.discord.token) {
-  console.error('Brakuje DISCORD_TOKEN. Uzupelnij .env albo zmienne srodowiskowe kontenera.');
+const requiredDiscordEnv = [
+  ['DISCORD_TOKEN', config.discord.token],
+  ['DISCORD_GUILD_ID', config.discord.guildId]
+];
+const missingDiscordEnv = requiredDiscordEnv
+  .filter(([, value]) => !value)
+  .map(([name]) => name);
+
+if (missingDiscordEnv.length > 0) {
+  console.error(
+    `Brakuje konfiguracji Discord: ${missingDiscordEnv.join(', ')}. ` +
+    'Uzupelnij .env albo zmienne srodowiskowe kontenera.'
+  );
   process.exit(1);
 }
 

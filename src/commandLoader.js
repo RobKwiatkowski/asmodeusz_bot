@@ -83,11 +83,23 @@ function registerInteractionRouter(client) {
 function registerCommandsOnReady(client, commandPayload) {
   client.once('clientReady', async () => {
     const rest = new REST({ version: '10' }).setToken(config.discord.token);
+    const applicationId = client.application?.id || client.user?.id;
 
     try {
+      if (!applicationId) {
+        throw new Error('Nie moge ustalic ID aplikacji Discord po zalogowaniu bota.');
+      }
+
+      if (config.discord.clientId && config.discord.clientId !== applicationId) {
+        console.warn(
+          `[commands] DISCORD_CLIENT_ID=${config.discord.clientId} nie pasuje do zalogowanego bota ` +
+          `(${applicationId}). Uzywam ID zalogowanego bota.`
+        );
+      }
+
       console.log('[commands] Rejestruje komendy slash...');
       await rest.put(
-        Routes.applicationGuildCommands(config.discord.clientId, config.discord.guildId),
+        Routes.applicationGuildCommands(applicationId, config.discord.guildId),
         { body: commandPayload }
       );
       console.log(`[commands] Zarejestrowano ${commandPayload.length} komend.`);
