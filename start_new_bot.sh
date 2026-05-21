@@ -30,4 +30,4 @@ docker compose up -d --build
 
 echo
 echo "3. Pokazuje logi bota..."
-docker logs -f asmodeusz
+docker logs -f sentinel

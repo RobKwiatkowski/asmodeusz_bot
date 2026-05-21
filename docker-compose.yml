@@ -1,9 +1,9 @@
 # Przyklad uruchomienia na domowym serwerze. Pliki JSON i logi warto trzymac
 # na hoście, bo sa stanem bota, a nie czescia obrazu.
 services:
-  asmodeusz:
+  sentinel:
     build: .
-    container_name: asmodeusz
+    container_name: sentinel
     restart: unless-stopped
     env_file:
       - ${ENV_FILE:-.env.production}
