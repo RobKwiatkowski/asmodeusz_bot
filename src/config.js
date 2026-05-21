@@ -48,7 +48,7 @@ const config = {
       '803986035855982642',
       '803987493296668732'
     ]),
-    botActivity: env('BOT_ACTIVITY', 'National Devils Bot')
+    botActivity: env('BOT_ACTIVITY', 'NPC z uprawnieniami admina')
   },
   files: {
     lottery: path.join(dataDir, 'loteria.json'),
@@ -82,10 +82,10 @@ const config = {
     technicalChannelId: env('VOICE_TECHNICAL_CHANNEL_ID', '1390991172754997309'),
     logChannelId: env('VOICE_LOG_CHANNEL_ID', '1426515984122122260'),
     creatorNames: envList('VOICE_CREATOR_NAMES', [
-      '➕ Standardowy DUO',
-      '➕ Standardowy SQUAD',
-      '➕ Rywalizacja DUO',
-      '➕ Rywalizacja SQUAD',
+      '➕ Normal DUO',
+      '➕ Normal SQUAD',
+      '➕ Ranked DUO',
+      '➕ Ranked SQUAD',
       '➕ FPP SQUAD'
     ])
   },
