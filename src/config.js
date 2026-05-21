@@ -18,6 +18,12 @@ function envNumber(name, fallback) {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+function envBool(name, fallback = false) {
+  const value = env(name);
+  if (!value) return fallback;
+  return ['1', 'true', 'tak', 'yes', 'on'].includes(value.toLowerCase());
+}
+
 function envList(name, fallback = []) {
   const value = env(name);
   if (!value) return fallback;
@@ -48,7 +54,9 @@ const config = {
       '803986035855982642',
       '803987493296668732'
     ]),
-    botActivity: env('BOT_ACTIVITY', 'NPC z uprawnieniami admina')
+    botActivity: env('BOT_ACTIVITY', 'NPC z uprawnieniami admina'),
+    enableGuildMembersIntent: envBool('DISCORD_ENABLE_GUILD_MEMBERS_INTENT', false),
+    enableMessageContentIntent: envBool('DISCORD_ENABLE_MESSAGE_CONTENT_INTENT', false)
   },
   files: {
     lottery: path.join(dataDir, 'loteria.json'),
@@ -155,6 +163,7 @@ function requireEnv(name, friendlyName = name) {
 module.exports = {
   config,
   env,
+  envBool,
   envList,
   envNumber,
   requireEnv,

@@ -17,30 +17,59 @@ const { setupClanLevelMonitor } = require('./clanLevelMonitor');
 const { setupBoostThanks } = require('./boostThanks');
 const { setupPresence } = require('./presence');
 const { setupTipply } = require('./tipply');
+const { config } = require('../config');
 
 const features = [
   setupPubgRanks,
   setupPubgTop,
-  setupMessageLogger,
   setupStreams,
-  setupAutoRole,
   setupStandardVoiceRooms,
   setupGameVoiceRooms,
   setupTickets,
   setupYoutube,
   setupVoiceLogs,
-  setupMemberLeaveLogs,
   setupEmptyVoiceCleanup,
-  setupAnniversaries,
   setupClanLevelMonitor,
   setupBoostThanks,
   setupPresence,
   setupTipply
 ];
 
+const guildMembersFeatures = [
+  ['autoRole', setupAutoRole],
+  ['memberLeaveLogs', setupMemberLeaveLogs],
+  ['anniversaries', setupAnniversaries]
+];
+
+const messageContentFeatures = [
+  ['messageLogger', setupMessageLogger]
+];
+
 function setupFeatures(client) {
   for (const setup of features) {
     setup(client);
+  }
+
+  if (config.discord.enableGuildMembersIntent) {
+    for (const [, setup] of guildMembersFeatures) {
+      setup(client);
+    }
+  } else {
+    console.warn(
+      `[features] Pomijam funkcje wymagajace Guild Members Intent: ` +
+      guildMembersFeatures.map(([name]) => name).join(', ')
+    );
+  }
+
+  if (config.discord.enableMessageContentIntent) {
+    for (const [, setup] of messageContentFeatures) {
+      setup(client);
+    }
+  } else {
+    console.warn(
+      `[features] Pomijam funkcje wymagajace Message Content Intent: ` +
+      messageContentFeatures.map(([name]) => name).join(', ')
+    );
   }
 }
 
