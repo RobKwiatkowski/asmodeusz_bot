@@ -1,10 +1,10 @@
 {
   "name": "bot",
   "version": "1.0.0",
-  "main": "asmodeusz.js",
+  "main": "sentinel.js",
   "scripts": {
-    "start": "node asmodeusz.js",
-    "check": "node --check asmodeusz.js"
+    "start": "node sentinel.js",
+    "check": "node --check sentinel.js"
   },
   "author": "",
   "license": "ISC",

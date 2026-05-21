@@ -7,7 +7,7 @@ function pubgHeaders() {
   return {
     Authorization: `Bearer ${config.pubg.apiKey}`,
     Accept: 'application/vnd.api+json',
-    'User-Agent': 'Asmodeusz Discord Bot'
+    'User-Agent': 'Sentinel Discord Bot'
   };
 }
 

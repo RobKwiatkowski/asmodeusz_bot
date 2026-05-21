@@ -35,8 +35,8 @@ Tych rzeczy bot nie potrzebuje do startu po refaktorze:
 - `node_modules/` - odtwarzane przez `npm ci`
 - `old/`
 - `Działająca konfiguracja/`
-- `Oryginalny bot Asmodeusz/`
-- `asmodeusz.monolith.js` - lokalna kopia starego monolitu, zrobiona przed refaktorem
+- `Oryginalny bot Sentinel/`
+- `sentinel.monolith.js` - lokalna kopia starego monolitu, zrobiona przed refaktorem
 - `stats_cache_old.json`
 - `message_log.txt`, jezeli nie uzywasz go recznie
 - `events/config.json` - usuniete w refaktorze, konfiguracja eventow WP jest teraz w ENV
@@ -52,7 +52,7 @@ Tych rzeczy bot nie potrzebuje do startu po refaktorze:
 
 Te pliki sa potrzebne albo sa kodem/aplikacja:
 
-- `asmodeusz.js`
+- `sentinel.js`
 - `src/`
 - `commands/`
 - `events/`

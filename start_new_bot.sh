@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_DIR="${1:-$HOME/asmodeusz_bot}"
+REPO_DIR="${1:-$HOME/sentinel_bot}"
 BRANCH="${2:-}"
 
 if [ ! -d "$REPO_DIR/.git" ]; then

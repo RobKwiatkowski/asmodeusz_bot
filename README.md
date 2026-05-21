@@ -1,13 +1,13 @@
-# Asmodeusz
+# Sentinel
 
 Bot Discord dla spolecznosci National Devils. Po refaktorze glowny plik
-`asmodeusz.js` tylko uruchamia aplikacje, a funkcje sa w modulach `src/features`.
+`sentinel.js` tylko uruchamia aplikacje, a funkcje sa w modulach `src/features`.
 
 ## Szybkie wprowadzenie
 
 Jesli przekazujesz ten projekt dalej, najprosciej myslec o nim tak:
 
-1. `asmodeusz.js` uruchamia bota.
+1. `sentinel.js` uruchamia bota.
 2. `src/config.js` zbiera ustawienia i sekrety.
 3. `commands/` trzyma komendy wpisywane na Discordzie.
 4. `src/features/` trzyma automatyczne funkcje bota.
@@ -59,7 +59,7 @@ Szczegoly sprzatania sa w `docs/CLEANUP.md`.
 
 ### Glowny kod aplikacji
 
-- `asmodeusz.js` - glowny punkt startowy. Sprawdza konfiguracje, tworzy klienta Discord i wlacza reszte modulow.
+- `sentinel.js` - glowny punkt startowy. Sprawdza konfiguracje, tworzy klienta Discord i wlacza reszte modulow.
 - `src/config.js` - centrum ustawien. Tu sa sciezki do plikow, ID kanalow i rol oraz dane do integracji.
 - `src/client.js` - tworzy polaczenie z Discordem i ustawia, jakie typy zdarzen bot ma odbierac.
 - `src/commandLoader.js` - laduje komendy slash z katalogu `commands/` i rejestruje je na serwerze Discord.
