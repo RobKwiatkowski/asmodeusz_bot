@@ -7,7 +7,6 @@ logs
 google-service-account.json
 old
 Działająca konfiguracja
-Oryginalny bot Asmodeusz
 *.log
 stats_cache*.json
 message_log.txt

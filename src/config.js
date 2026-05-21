@@ -38,7 +38,7 @@ const config = {
   },
   discord: {
     token: env('DISCORD_TOKEN'),
-    clientId: env('DISCORD_CLIENT_ID', '1335378256953606154'),
+    clientId: env('DISCORD_CLIENT_ID'),
     guildId: env('DISCORD_GUILD_ID', '771352465346002944'),
     generalChannelName: env('GENERAL_CHANNEL_NAME', '💬『ogólny』'),
     defaultRoleName: env('DEFAULT_ROLE_NAME', 'Gracz'),
