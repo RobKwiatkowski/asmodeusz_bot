@@ -40,6 +40,8 @@ const pendingFlows = new Map();
 const cooldowns = new Map();
 const failedAttempts = new Map();
 const deleteTimers = new Map();
+const roomsByUser = new Map();
+const roomOwners = new Map();
 
 function loadVoiceConfig() {
   try {
@@ -243,6 +245,8 @@ function buildChannelName(gameName, member) {
 async function startFlow(client, member, technicalChannel) {
   const guild = member.guild;
   const flowKey = key(guild.id, member.id);
+  await deletePreviousEmptyRoom(client, flowKey);
+
   const instructionChannel = await findInstructionChannel(guild, technicalChannel);
   if (!instructionChannel) {
     await disconnectFromTechnicalVoice(member);
@@ -353,6 +357,8 @@ async function completeCreation(client, interaction, member, gameName) {
   }
 
   failedAttempts.delete(flowKey);
+  roomsByUser.set(flowKey, channel.id);
+  roomOwners.set(channel.id, flowKey);
   if (createCooldownMs > 0) cooldowns.set(flowKey, Date.now() + createCooldownMs);
   clearFlow(flowKey, client, true);
   logToFile(`[voice] Utworzono kanal innej gry: ${channel.name}`);
@@ -443,10 +449,38 @@ function scheduleDelete(client, channel) {
     deleteTimers.delete(channel.id);
     const freshChannel = await client.channels.fetch(channel.id).catch(() => null);
     if (!freshChannel || freshChannel.members.size > 0) return;
-    await freshChannel.delete().catch(error => console.error('[gameVoiceRooms] Blad usuwania:', error));
+    await freshChannel.delete().then(() => clearRoomState(channel.id)).catch(error => console.error('[gameVoiceRooms] Blad usuwania:', error));
   }, deleteDelayMs);
 
   deleteTimers.set(channel.id, timeout);
+}
+
+function clearRoomState(channelId) {
+  const ownerKey = roomOwners.get(channelId);
+  roomOwners.delete(channelId);
+  if (!ownerKey) return;
+  if (roomsByUser.get(ownerKey) === channelId) {
+    roomsByUser.delete(ownerKey);
+    cooldowns.delete(ownerKey);
+  }
+}
+
+async function deletePreviousEmptyRoom(client, flowKey) {
+  const previousChannelId = roomsByUser.get(flowKey);
+  if (!previousChannelId) return;
+
+  const previousChannel = await client.channels.fetch(previousChannelId).catch(() => null);
+  if (!previousChannel) {
+    clearRoomState(previousChannelId);
+    return;
+  }
+
+  if (previousChannel.members.size > 0) return;
+
+  cancelDelete(previousChannelId);
+  await previousChannel.delete()
+    .then(() => clearRoomState(previousChannelId))
+    .catch(error => console.error('[gameVoiceRooms] Blad usuwania poprzedniego pokoju:', error));
 }
 
 function cancelDelete(channelId) {
@@ -468,6 +502,8 @@ function setupGameVoiceRooms(client) {
 
     if (isOtherGameTrigger(newState.channel) && newState.member && !newState.member.user.bot) {
       const flowKey = key(newState.guild.id, newState.member.id);
+      await deletePreviousEmptyRoom(client, flowKey);
+
       const remaining = cooldownRemainingMs(flowKey);
       if (remaining > 0) {
         await disconnectFromTechnicalVoice(newState.member);
