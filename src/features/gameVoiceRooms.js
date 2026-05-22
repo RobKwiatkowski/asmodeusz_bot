@@ -244,7 +244,7 @@ async function startFlow(client, member, technicalChannel) {
     );
 
   const message = await instructionChannel.send({
-    content: `${member}, wybierz gre z listy albo uzyj opcji "Inna gra". Masz ${Math.round(flowTimeoutMs / 1000)}s.`,
+    content: `${member}, Wybierz grę dla której chcesz pokój. Klknij na ikonę poniżej aby go utworzyć.`,
     components: [new ActionRowBuilder().addComponents(select)]
   }).catch(() => null);
 
@@ -279,15 +279,39 @@ function registerFailedAttempt(flowKey) {
 }
 
 async function createTemporaryChannel(member, channelName) {
+  const botId = member.guild.members.me?.id;
+  const permissionOverwrites = [
+    { id: member.guild.id, allow: [PermissionFlagsBits.Connect, PermissionFlagsBits.ViewChannel] },
+    { id: member.id, allow: [PermissionFlagsBits.Connect, PermissionFlagsBits.ManageChannels] }
+  ];
+
+  if (botId) {
+    permissionOverwrites.push({
+      id: botId,
+      allow: [
+        PermissionFlagsBits.Connect,
+        PermissionFlagsBits.ViewChannel,
+        PermissionFlagsBits.MoveMembers
+      ]
+    });
+  }
+
   return member.guild.channels.create({
     name: channelName,
     type: ChannelType.GuildVoice,
     parent: temporaryCategoryId,
-    permissionOverwrites: [
-      { id: member.guild.id, allow: [PermissionFlagsBits.Connect, PermissionFlagsBits.ViewChannel] },
-      { id: member.id, allow: [PermissionFlagsBits.Connect, PermissionFlagsBits.ManageChannels] }
-    ]
+    permissionOverwrites
   });
+}
+
+async function moveMemberToTemporaryChannel(member, channel) {
+  const freshMember = await member.guild.members.fetch(member.id);
+  if (!freshMember.voice.channelId) {
+    throw new Error('Uzytkownik nie jest juz na kanale glosowym.');
+  }
+
+  if (freshMember.voice.channelId === channel.id) return;
+  await freshMember.voice.setChannel(channel, 'Utworzono kanal tymczasowy Inna gra');
 }
 
 async function completeCreation(client, interaction, member, gameName) {
@@ -297,12 +321,27 @@ async function completeCreation(client, interaction, member, gameName) {
   }
 
   const channel = await createTemporaryChannel(member, buildChannelName(gameName, member));
-  await member.voice.setChannel(channel).catch(() => {});
+  try {
+    await moveMemberToTemporaryChannel(member, channel);
+  } catch (error) {
+    logToFile(`[voice] Utworzono kanal ${channel.name}, ale nie udalo sie przeniesc ${member.displayName}: ${error.message}`);
+    console.error('[gameVoiceRooms] Blad przenoszenia uzytkownika:', error);
+    if (channel.members.size === 0) {
+      await channel.delete().catch(() => {});
+    }
+    await interaction.editReply({
+      content:
+        'Utworzylem pokoj, ale nie moge Cie do niego przeniesc. ' +
+        'Sprawdz uprawnienie bota "Przenoszenie czlonkow" i sprobuj ponownie.'
+    });
+    return;
+  }
+
   failedAttempts.delete(flowKey);
   if (createCooldownMs > 0) cooldowns.set(flowKey, Date.now() + createCooldownMs);
   clearFlow(flowKey, client, true);
   logToFile(`[voice] Utworzono kanal innej gry: ${channel.name}`);
-  await interaction.editReply({ content: `Utworzono kanal: **${channel.name}**` });
+  await interaction.editReply({ content: `Utworzono kanal i przeniesiono Cie do: **${channel.name}**` });
 }
 
 async function handleSelect(client, interaction) {

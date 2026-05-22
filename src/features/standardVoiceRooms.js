@@ -36,7 +36,11 @@ function setupStandardVoiceRooms(client) {
     const joinedChannel = newState.channel;
     const leftChannel = oldState.channel;
 
-    if (joinedChannel && config.voice.creatorNames.includes(joinedChannel.name)) {
+    if (
+      joinedChannel &&
+      joinedChannel.id !== config.voice.technicalChannelId &&
+      config.voice.creatorNames.includes(joinedChannel.name)
+    ) {
       const category = guild.channels.cache.get(config.voice.standardCategoryId);
       if (!category) return;
 
