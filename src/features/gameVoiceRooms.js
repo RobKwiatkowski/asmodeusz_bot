@@ -179,8 +179,10 @@ function cooldownRemainingMs(flowKey) {
 
 async function findInstructionChannel(guild, technicalChannel) {
   const canSend = channel =>
-    channel?.type === ChannelType.GuildText &&
+    typeof channel?.send === 'function' &&
     channel.permissionsFor(guild.members.me)?.has(PermissionFlagsBits.SendMessages);
+
+  if (canSend(technicalChannel)) return technicalChannel;
 
   if (voiceConfig.instructionChannelId) {
     const byId = await guild.channels.fetch(voiceConfig.instructionChannelId).catch(() => null);
