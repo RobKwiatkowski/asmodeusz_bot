@@ -19,7 +19,7 @@ const DEFAULT_CONFIG = {
   instructionChannelId: '',
   instructionChannelName: 'Info-jak-tworzyc-kanaly',
   flowTimeoutSeconds: 15,
-  emptyChannelDeleteDelaySeconds: 90,
+  emptyChannelDeleteDelaySeconds: 5,
   createCooldownSeconds: 45,
   failedAttemptWindowSeconds: 300,
   failedAttemptLimit: 3,
@@ -236,8 +236,7 @@ function sanitizePart(value, fallback, maxLength = 32) {
 
 function buildChannelName(gameName, member) {
   const gamePart = sanitizePart(gameName, voiceConfig.fallbackGameName, 32);
-  const nickPart = sanitizePart(member.displayName || member.user.username, 'Gracz', 24);
-  const name = `${gamePart} | ${nickPart}`;
+  const name = gamePart;
   return name.length > 90 ? name.slice(0, 90).trim() : name;
 }
 
