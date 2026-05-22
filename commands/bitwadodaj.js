@@ -103,7 +103,7 @@ data: new SlashCommandBuilder()
       await interaction.editReply(`✅ Bitwa ${klanA} vs ${klanB} została dodana.`);
 
       // 📢 OGŁOSZENIE
-      const channel = interaction.guild.channels.cache.find(c => c.name === '💬『ogólny』');
+      const channel = interaction.guild.channels.cache.find(c => c.name === '👩🏻‍💻︱główny');
       if (channel) {
         const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const path = require('path');
@@ -136,7 +136,7 @@ const embed = new EmbedBuilder()
   .setTimestamp();
 
 // 📢 wyślij na kanał
-const channel = interaction.guild.channels.cache.find(c => c.name === '💬『ogólny』');
+const channel = interaction.guild.channels.cache.find(c => c.name === '👩🏻‍💻︱główny');
 if (channel) {
   channel.send({ embeds: [embed], files: [attachment] });
 }

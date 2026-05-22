@@ -46,13 +46,11 @@ const config = {
     token: env('DISCORD_TOKEN'),
     clientId: env('DISCORD_CLIENT_ID'),
     guildId: env('DISCORD_GUILD_ID'),
-    generalChannelName: env('GENERAL_CHANNEL_NAME', '💬『ogólny』'),
-    defaultRoleName: env('DEFAULT_ROLE_NAME', 'Gracz'),
-    moderatorRoleId: env('MODERATOR_ROLE_ID', '1369777784552947792'),
+    generalChannelName: env('GENERAL_CHANNEL_NAME', '👩🏻‍💻︱główny'),
+    defaultRoleName: env('DEFAULT_ROLE_NAME', 'Zweryfikowany'),
+    moderatorRoleId: env('MODERATOR_ROLE_ID', '1506307087259533393'),
     adminRoleIds: envList('ADMIN_ROLE_IDS', [
-      '1369777784552947792',
-      '803986035855982642',
-      '803987493296668732'
+      '1506304554315157544'
     ]),
     botActivity: env('BOT_ACTIVITY', 'NPC z uprawnieniami admina'),
     enableGuildMembersIntent: envBool('DISCORD_ENABLE_GUILD_MEMBERS_INTENT', false),
@@ -85,32 +83,32 @@ const config = {
     clanLevelCheckMs: envNumber('PUBG_CLAN_LEVEL_CHECK_MS', 60 * 1000)
   },
   voice: {
-    standardCategoryId: env('VOICE_STANDARD_CATEGORY_ID', '1393980909857935442'),
-    otherGamesCategoryId: env('VOICE_OTHER_GAMES_CATEGORY_ID', '1388858987507880027'),
-    technicalChannelId: env('VOICE_TECHNICAL_CHANNEL_ID', '1390991172754997309'),
-    logChannelId: env('VOICE_LOG_CHANNEL_ID', '1426515984122122260'),
+    standardCategoryId: env('VOICE_STANDARD_CATEGORY_ID', '1506389483812032704'),
+    otherGamesCategoryId: env('VOICE_OTHER_GAMES_CATEGORY_ID', '1506389589437190364'),
+    technicalChannelId: env('VOICE_TECHNICAL_CHANNEL_ID', '1506317778884493322'),
+    logChannelId: env('VOICE_LOG_CHANNEL_ID', '1507281282990866453'),
     creatorNames: envList('VOICE_CREATOR_NAMES', [
       '➕ Normal DUO',
       '➕ Normal SQUAD',
       '➕ Ranked DUO',
       '➕ Ranked SQUAD',
-      '➕ FPP SQUAD'
+      '➕ Inna Gra'
     ])
   },
   tickets: {
-    categoryId: env('TICKET_CATEGORY_ID', '1423771690579787856'),
-    archiveCategoryId: env('TICKET_ARCHIVE_CATEGORY_ID', '1423772048525885571')
+    categoryId: env('TICKET_CATEGORY_ID', '1506386954571219056'),
+    archiveCategoryId: env('TICKET_ARCHIVE_CATEGORY_ID', '1506387177326776370')
   },
   reactionRoles: {
-    channelId: env('REACTION_ROLES_CHANNEL_ID', '1165037966159253524')
+    channelId: env('REACTION_ROLES_CHANNEL_ID', '1506375175048925234')
   },
   notifications: {
-    leaveLogChannelId: env('LEAVE_LOG_CHANNEL_ID', '1370656766651797544'),
-    boostSystemChannelId: env('BOOST_SYSTEM_CHANNEL_ID', '1370656766651797544'),
-    thankChannelId: env('THANK_CHANNEL_ID', '771352465346002947'),
-    youtubeChannelId: env('YOUTUBE_NOTIFY_CHANNEL_ID', '1371120729592037416'),
+    leaveLogChannelId: env('LEAVE_LOG_CHANNEL_ID', '1506378538113040414'),
+    boostSystemChannelId: env('BOOST_SYSTEM_CHANNEL_ID', '1506378538113040414'),
+    thankChannelId: env('THANK_CHANNEL_ID', '1506376497416372465'),
+    youtubeChannelId: env('YOUTUBE_NOTIFY_CHANNEL_ID', '1506365761570996365'),
     youtubeCheckMs: envNumber('YOUTUBE_CHECK_MS', 30 * 60 * 1000),
-    twitchChannelName: env('TWITCH_NOTIFY_CHANNEL_NAME', '🔴『stream-online』'),
+    twitchChannelName: env('TWITCH_NOTIFY_CHANNEL_NAME', '🔴︱streamy'),
     streamerRoleName: env('STREAMER_ROLE_NAME', 'Streamer'),
     twitchCheckMs: envNumber('TWITCH_CHECK_MS', 60 * 1000)
   },
@@ -133,23 +131,23 @@ const config = {
     eventsToken: env('WP_EVENTS_TOKEN')
   },
   tipply: {
-    channelId: env('TIPPLY_CHANNEL_ID', '771352465346002947'),
+    channelId: env('TIPPLY_CHANNEL_ID', '1506376497416372465'),
     widgetUrl: env('TIPPLY_WIDGET_URL'),
     browserExecutablePath: env('PUPPETEER_EXECUTABLE_PATH')
   },
   clan: {
-    roleId: env('CLAN_ROLE_ID', '935670014999158815'),
-    statsChannelName: env('CLAN_STATS_CHANNEL_NAME', '💬『ogólny』')
+    roleId: env('CLAN_ROLE_ID', '1506382288655745165'),
+    statsChannelName: env('CLAN_STATS_CHANNEL_NAME', '👩🏻‍💻︱główny')
   },
   search: {
-    allowedChannelId: env('SEARCH_ALLOWED_CHANNEL_ID', '1413600575618285679'),
-    pingRoleId: env('SEARCH_PING_ROLE_ID', '1452803163815153929')
+    allowedChannelId: env('SEARCH_ALLOWED_CHANNEL_ID', '1506365990298980392'),
+    pingRoleId: env('SEARCH_PING_ROLE_ID', '1507294468246867988')
   },
   vipRoom: {
-    categoryId: env('VIPROOM_CATEGORY_ID', '1393980909857935442'),
+    categoryId: env('VIPROOM_CATEGORY_ID', '1506389483812032704'),
     allowedRoleIds: envList('VIPROOM_ALLOWED_ROLE_IDS', [
-      '1482730862918500465',
-      '874313255802245162'
+      '1507283147765579857',
+      '1507283220448935996'
     ])
   }
 };
