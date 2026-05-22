@@ -6,6 +6,20 @@ const { logToFile } = require('../logger');
 
 const temporaryChannels = new Map();
 
+function normalizeChannelName(name) {
+  return String(name || '')
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .replace(/[^\p{L}\p{N}\s]+/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
+function isOtherGameTrigger(channel) {
+  return normalizeChannelName(channel?.name) === 'inna gra';
+}
+
 function getNextAvailableNumber(guild, baseName) {
   const existingNumbers = new Set();
 
@@ -39,6 +53,7 @@ function setupStandardVoiceRooms(client) {
     if (
       joinedChannel &&
       joinedChannel.id !== config.voice.technicalChannelId &&
+      !isOtherGameTrigger(joinedChannel) &&
       config.voice.creatorNames.includes(joinedChannel.name)
     ) {
       const category = guild.channels.cache.get(config.voice.standardCategoryId);

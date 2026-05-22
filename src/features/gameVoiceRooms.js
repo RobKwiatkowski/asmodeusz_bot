@@ -72,6 +72,22 @@ function normalizeForValidation(value) {
     .toLowerCase();
 }
 
+function normalizeChannelName(name) {
+  return normalizeForValidation(name)
+    .replace(/[^\p{L}\p{N}\s]+/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function isOtherGameTrigger(channel) {
+  if (!channel) return false;
+  return channel.id === technicalChannelId || normalizeChannelName(channel.name) === 'inna gra';
+}
+
+function isMemberOnOtherGameTrigger(member) {
+  return isOtherGameTrigger(member?.voice?.channel) || member?.voice?.channelId === technicalChannelId;
+}
+
 function loadBlockedTerms() {
   const fileName = voiceConfig.blockedTermsFile;
   const terms = [...(voiceConfig.blockedTerms || [])];
@@ -202,7 +218,7 @@ function clearFlow(flowKey, client, shouldDeleteMessage = false) {
 }
 
 async function disconnectFromTechnicalVoice(member) {
-  if (member?.voice?.channelId === technicalChannelId) {
+  if (isMemberOnOtherGameTrigger(member)) {
     await member.voice.disconnect('Nie zakonczono tworzenia kanalu tymczasowego na czas.').catch(() => {});
   }
 }
@@ -358,7 +374,7 @@ async function handleSelect(client, interaction) {
   }
 
   const member = await interaction.guild.members.fetch(userId).catch(() => null);
-  if (!member || member.voice.channelId !== technicalChannelId) {
+  if (!member || !isMemberOnOtherGameTrigger(member)) {
     clearFlow(flowKey, client, true);
     await interaction.reply({ content: 'Wejdz na kanal Inna gra, zeby utworzyc pokoj.', ephemeral: true });
     return;
@@ -393,7 +409,7 @@ async function handleModal(client, interaction) {
 
   const flowKey = key(interaction.guild.id, userId);
   const member = await interaction.guild.members.fetch(userId).catch(() => null);
-  if (!pendingFlows.has(flowKey) || !member || member.voice.channelId !== technicalChannelId) {
+  if (!pendingFlows.has(flowKey) || !member || !isMemberOnOtherGameTrigger(member)) {
     clearFlow(flowKey, client, true);
     await interaction.reply({ content: 'Wejdz na kanal Inna gra, zeby utworzyc pokoj.', ephemeral: true });
     return;
@@ -451,7 +467,7 @@ function setupGameVoiceRooms(client) {
       cancelDelete(newState.channel.id);
     }
 
-    if (newState.channelId === technicalChannelId && newState.member && !newState.member.user.bot) {
+    if (isOtherGameTrigger(newState.channel) && newState.member && !newState.member.user.bot) {
       const flowKey = key(newState.guild.id, newState.member.id);
       const remaining = cooldownRemainingMs(flowKey);
       if (remaining > 0) {
