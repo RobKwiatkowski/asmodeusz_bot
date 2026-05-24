@@ -77,7 +77,7 @@ const config = {
     apiKey: env('PUBG_API_KEY'),
     platform: env('PUBG_PLATFORM', env('PLATFORM', 'steam')),
     region: env('PUBG_REGION', 'steam'),
-    clanId: env('PUBG_CLAN_ID', 'clan.4708615947dc483c871621fc3b24590f'),
+    clanId: env('PUBG_CLAN_ID', 'clan.5c19a5d4e192425598641f055785cfb5'),
     rankedRequestDelayMs: envNumber('PUBG_REQUEST_DELAY_MS', 15000),
     statsCacheTtlMs: envNumber('PUBG_STATS_CACHE_TTL_MS', 60 * 60 * 1000),
     clanLevelCheckMs: envNumber('PUBG_CLAN_LEVEL_CHECK_MS', 60 * 1000)

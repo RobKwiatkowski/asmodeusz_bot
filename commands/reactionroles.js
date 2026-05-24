@@ -12,21 +12,20 @@ const {
 // MAPA EMOJI → ROLE 
 // ======================================================
 const roleMap = {
-    "<:drop:1442243495019413639>": "1442234861627773030", // PUBG
-    "🚜": "1423546933993279508", // FS25
-    "❄️": "1437733867413835938", // SnowRunner
-    "🪖": "1441742123216011314", // Battlefield
-    "⛏️": "1421592650460430366", // Minecraft
-    "🔍": "1452803163815153929", // Szukajka graczy
-    "🏆": "1452803259239497788", // Eventy
-    "<:blindspot:1473619199338352745>": "1470022146448293974", // PUBG Blindspot
-    "<:quake3:1473618320652763269>": "1474143428177694761" // Quake 3
+    "<:drop:1507433748977815592>": "1507428879273300000", // PUBG 
+    "🚜": "1507428804337991782", // FS25
+    "❄️": "1507434428132229301", // SnowRunner
+    "🪖": "1507434576815853679", // Battlefield 
+    "⛏️": "1507428940250349648", // Minecraft
+    "🔍": "1507294468246867988", // Szukajka graczy
+    "🏆": "1507434637146980455", // Eventy
+    "<:quake3:1507435611240267847>": "1507435689665364160" // Quake 3
 };
 
 // ======================================================
 // ID WIADOMOŚCI Z REACTION ROLES (AKTUALNE!)
 // ======================================================
-let reactionMessageId = "1442246944499175524";
+let reactionMessageId = "1507441069661356087";
 
 module.exports = {
 
@@ -72,15 +71,14 @@ module.exports = {
                     .setTitle('🎮 Wybierz gry, które Cię interesują')
                     .setDescription(
                         'Kliknij ikonę reakcji, aby otrzymać rolę:\n\n' +
-                        '<:drop:1442243495019413639> — PUBG\n' +
+                        '<:drop:1507433748977815592> — PUBG\n' +
                         '🚜 — Farming Simulator 25\n' +
                         '❄️ — SnowRunner\n' +
                         '🪖 — Battlefield\n' +
                         '⛏️ — Minecraft\n' +
                         '🔍 — Szukajka graczy\n' +
                         '🏆 — Eventy / turnieje\n' +
-                        '<:blindspot:1473619199338352745> — PUBG Blindspot\n' +
-                        '<:quake3:1473618320652763269> — Quake 3 Arena'
+                        '<:quake3:1507435611240267847> — Quake 3 Arena'
                     )
                     .setColor('Blue');
 
