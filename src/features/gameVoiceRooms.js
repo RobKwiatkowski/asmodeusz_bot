@@ -28,7 +28,7 @@ const DEFAULT_CONFIG = {
   allowedGameNameMaxLength: 24,
   maxGameNameWords: 3,
   fallbackGameName: 'Inna gra',
-  popularGames: ['Battlefield 6', 'SnowRunner', 'Minecraft', 'Farming Simulator 25'],
+  popularGames: ['SnowRunner', 'Minecraft', 'Farming Simulator 25','Quake 3 Arena' ],
   blockedTermsFile: 'wulgaryzmy.txt',
   lowQualityNames: ['aaa', 'test', 'elo', 'pokoj', 'kanal', 'nic'],
   blockedTerms: []
