@@ -1,6 +1,13 @@
 // System ticketow: przycisk otwiera prywatny kanal, a zamkniecie przenosi go
 // do kategorii archiwum.
-const { ChannelType, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ChannelType,
+  EmbedBuilder,
+  PermissionFlagsBits
+} = require('discord.js');
 const { config } = require('../config');
 const { readJson, writeJson } = require('../jsonStore');
 
