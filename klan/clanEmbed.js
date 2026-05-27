@@ -19,10 +19,10 @@ function createClanEmbed() {
   const regulars = members.filter(m => m.roleClan === 'Członek');
 
   const embed = new EmbedBuilder()
-    .setTitle('🔥 Pełny skład klanu DEVS')
+    .setTitle('🔥 Pełny skład klanu Legion')
     .setColor('#c40000')
     // ⬇️ LOGO W PRAWYM GÓRNYM ROGU
-    .setThumbnail('https://nationaldevils.eu/wp-content/uploads/2026/02/logo-klan-1.png')
+    .setThumbnail('https://media.discordapp.net/attachments/1506365761570996365/1507781391948185641/Polisg_PUBG_Legion_01.png?ex=6a132659&is=6a11d4d9&hm=5c8264f2b3bb5c56518ddb34d6096597fbdf9fcd62e49d169ce69eddaa0d26ea&=&format=webp&quality=lossless')
     .setTimestamp();
 
   // 👑 ZAŁOŻYCIEL

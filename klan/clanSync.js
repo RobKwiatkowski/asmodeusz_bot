@@ -3,7 +3,7 @@ const { loadData, saveData } = require('./clanStore');
 
 async function syncClanRole(guild, roleId) {
   const role = await guild.roles.fetch(roleId);
-  if (!role) throw new Error('Nie znaleziono roli DEVS');
+  if (!role) throw new Error('Nie znaleziono roli LEGION');
 
   // role.members pobiera TYLKO osoby z rolą (bez global fetch)
   const members = role.members;
@@ -25,7 +25,7 @@ async function syncClanRole(guild, roleId) {
   data.roleId = roleId;
   saveData(data);
 
-  console.log(`Zsynchronizowano ${members.size} członków klanu DEVS`);
+  console.log(`Zsynchronizowano ${members.size} członków klanu LEGION`);
 }
 
 module.exports = { syncClanRole };
